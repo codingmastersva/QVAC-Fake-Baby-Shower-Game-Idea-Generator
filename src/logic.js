@@ -26,7 +26,7 @@ export async function generate(modelId, input) {
     history: [
       {
         role: "system",
-        content: ((v) => `Invent one short, quirky baby shower game idea (1-2 sentences describing how to play) fitting this theme: ${v}. Reply with ONLY the game idea, no preamble.`)(input),
+        content: ((v) => `Invent one short, quirky baby shower game idea (1-2 sentences describing how to play) fitting this theme: ${v}. Do not use quotation marks anywhere in the reply. Reply with ONLY the game idea, no preamble.`)(input),
       },
       { role: "user", content: `Input: ${input}` },
     ],
@@ -49,6 +49,7 @@ export async function generate(modelId, input) {
     .replace(/^["']/, "")
     .replace(/["']$/, "")
     .replace(/:\s*$/, "")
+    .replace(/"/g, "")
     .trim();
 
   const result = looksUnusable(text) ? FALLBACK(input) : text;
